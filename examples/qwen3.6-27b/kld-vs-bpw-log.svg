@@ -1,0 +1,86 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 480" font-family="'Helvetica Neue', Helvetica, Arial, sans-serif">
+<rect width="760" height="480" fill="white"/>
+<text x="70" y="26" font-size="16" font-weight="bold" fill="#222">Qwen3.6-27B: mean KL divergence by quantization</text>
+<text x="70" y="45" font-size="12" fill="#555">mean KLD vs the bfloat16 teacher, lower is better</text>
+<line x1="70" y1="395.4" x2="736" y2="395.4" stroke="#e8e8e8"/>
+<text x="62" y="399.4" font-size="11" fill="#555" text-anchor="end">0.005</text>
+<line x1="70" y1="336.2" x2="736" y2="336.2" stroke="#e8e8e8"/>
+<text x="62" y="340.2" font-size="11" fill="#555" text-anchor="end">0.01</text>
+<line x1="70" y1="277.0" x2="736" y2="277.0" stroke="#e8e8e8"/>
+<text x="62" y="281.0" font-size="11" fill="#555" text-anchor="end">0.02</text>
+<line x1="70" y1="198.7" x2="736" y2="198.7" stroke="#e8e8e8"/>
+<text x="62" y="202.7" font-size="11" fill="#555" text-anchor="end">0.05</text>
+<line x1="70" y1="139.5" x2="736" y2="139.5" stroke="#e8e8e8"/>
+<text x="62" y="143.5" font-size="11" fill="#555" text-anchor="end">0.1</text>
+<line x1="70" y1="80.3" x2="736" y2="80.3" stroke="#e8e8e8"/>
+<text x="62" y="84.3" font-size="11" fill="#555" text-anchor="end">0.2</text>
+<line x1="177.8" y1="424" x2="177.8" y2="429" stroke="#999"/>
+<text x="177.8" y="444" font-size="11" fill="#555" text-anchor="middle">4</text>
+<line x1="322.3" y1="424" x2="322.3" y2="429" stroke="#999"/>
+<text x="322.3" y="444" font-size="11" fill="#555" text-anchor="middle">5</text>
+<line x1="466.9" y1="424" x2="466.9" y2="429" stroke="#999"/>
+<text x="466.9" y="444" font-size="11" fill="#555" text-anchor="middle">6</text>
+<line x1="611.5" y1="424" x2="611.5" y2="429" stroke="#999"/>
+<text x="611.5" y="444" font-size="11" fill="#555" text-anchor="middle">7</text>
+<line x1="70" y1="424" x2="736" y2="424" stroke="#999"/>
+<line x1="70" y1="62" x2="70" y2="424" stroke="#999"/>
+<text x="403.0" y="466" font-size="12" fill="#333" text-anchor="middle">effective bits per weight</text>
+<text x="18" y="243.0" font-size="12" fill="#333" text-anchor="middle" transform="rotate(-90 18 243.0)">mean KLD (nats)</text>
+<circle cx="105.7" cy="73.9" r="5.0" fill="#4878cf"/>
+<rect x="126.1" y="141.5" width="8.8" height="8.8" fill="#d65f2f"/>
+<circle cx="155.9" cy="76.4" r="5.0" fill="#4878cf"/>
+<rect x="192.2" y="164.8" width="8.8" height="8.8" fill="white" stroke="#d65f2f" stroke-width="2"/>
+<rect x="217.0" y="198.8" width="8.8" height="8.8" fill="#d65f2f"/>
+<rect x="258.6" y="256.3" width="8.8" height="8.8" fill="#d65f2f"/>
+<circle cx="278.2" cy="187.0" r="5.0" fill="#4878cf"/>
+<rect x="276.5" y="261.6" width="8.8" height="8.8" fill="#d65f2f"/>
+<circle cx="307.7" cy="218.4" r="5.0" fill="#4878cf"/>
+<rect x="311.2" y="265.4" width="8.8" height="8.8" fill="white" stroke="#d65f2f" stroke-width="2"/>
+<rect x="318.8" y="270.7" width="8.8" height="8.8" fill="#d65f2f"/>
+<rect x="352.8" y="280.5" width="8.8" height="8.8" fill="#d65f2f"/>
+<rect x="410.4" y="327.4" width="8.8" height="8.8" fill="#d65f2f"/>
+<circle cx="420.3" cy="269.4" r="5.0" fill="#4878cf"/>
+<rect x="434.3" y="335.9" width="8.8" height="8.8" fill="#d65f2f"/>
+<circle cx="441.6" cy="278.5" r="5.0" fill="#4878cf"/>
+<rect x="456.2" y="336.8" width="8.8" height="8.8" fill="#d65f2f"/>
+<rect x="482.2" y="344.0" width="8.8" height="8.8" fill="white" stroke="#d65f2f" stroke-width="2"/>
+<rect x="515.4" y="348.3" width="8.8" height="8.8" fill="white" stroke="#d65f2f" stroke-width="2"/>
+<circle cx="562.5" cy="344.6" r="5.0" fill="#4878cf"/>
+<circle cx="566.7" cy="348.4" r="5.0" fill="#4878cf"/>
+<rect x="563.4" y="368.8" width="8.8" height="8.8" fill="#d65f2f"/>
+<rect x="596.9" y="376.7" width="8.8" height="8.8" fill="white" stroke="#d65f2f" stroke-width="2"/>
+<rect x="623.0" y="387.4" width="8.8" height="8.8" fill="white" stroke="#d65f2f" stroke-width="2"/>
+<rect x="695.9" y="395.0" width="8.8" height="8.8" fill="#d65f2f"/>
+<circle cx="406.9" cy="41.0" r="4.5" fill="#4878cf"/>
+<text x="418.4" y="45" font-size="12" fill="#333">MLX affine</text>
+<text x="494.4" y="45" font-size="12" fill="#333">K-quant / IQ:</text>
+<rect x="590.2" y="37.1" width="7.9" height="7.9" fill="#d65f2f"/>
+<text x="605.6" y="45" font-size="12" fill="#333">unsloth</text>
+<rect x="663.0" y="37.1" width="7.9" height="7.9" fill="white" stroke="#d65f2f" stroke-width="2"/>
+<text x="678.4" y="45" font-size="12" fill="#333">bartowski</text>
+<text x="115.7" y="76.9" font-size="10" fill="#444">q3</text>
+<text x="140.5" y="148.9" font-size="10" fill="#444">Q3_K_S</text>
+<text x="165.9" y="79.4" font-size="10" fill="#444">oQ3</text>
+<text x="206.6" y="172.1" font-size="10" fill="#444">IQ3_M</text>
+<text x="231.4" y="206.2" font-size="10" fill="#444">UD-Q3_K_XL</text>
+<text x="214.4" y="263.7" font-size="10" fill="#444">IQ4_XS</text>
+<text x="288.2" y="190.0" font-size="10" fill="#444">q4</text>
+<text x="261.6" y="284.5" font-size="10" fill="#444">Q4_K_S</text>
+<text x="317.7" y="221.4" font-size="10" fill="#444">oQ4e</text>
+<text x="296.2" y="257.3" font-size="10" fill="#444">Q4_K_S</text>
+<text x="303.9" y="293.6" font-size="10" fill="#444">Q4_K_M</text>
+<text x="367.2" y="302.8" font-size="10" fill="#444">UD-Q4_K_XL</text>
+<text x="366.2" y="334.8" font-size="10" fill="#444">Q5_K_S</text>
+<text x="396.1" y="272.4" font-size="10" fill="#444">q5</text>
+<text x="390.1" y="358.3" font-size="10" fill="#444">Q5_K_M</text>
+<text x="451.6" y="281.5" font-size="10" fill="#444">oQ5</text>
+<text x="470.5" y="329.2" font-size="10" fill="#444">UD-Q5_K_XL</text>
+<text x="467.2" y="366.9" font-size="10" fill="#444">Q5_K_M</text>
+<text x="471.2" y="385.7" font-size="10" fill="#444">Q5_K_L</text>
+<text x="538.3" y="347.6" font-size="10" fill="#444">q6</text>
+<text x="576.7" y="351.4" font-size="10" fill="#444">oQ6</text>
+<text x="531.4" y="376.1" font-size="10" fill="#444">Q6_K</text>
+<text x="588.1" y="368.5" font-size="10" fill="#444">Q6_K</text>
+<text x="637.3" y="394.8" font-size="10" fill="#444">Q6_K_L</text>
+<text x="668.8" y="417.9" font-size="10" fill="#444">UD-Q6_K_XL</text>
+</svg>

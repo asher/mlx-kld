@@ -1,0 +1,178 @@
+{
+  "schema_version": 1,
+  "teacher": {
+    "path": "models/mlx/mlx-community__Qwen3.6-27B-bf16",
+    "revision": null,
+    "precision": "bfloat16",
+    "tokenizer_hash": "79715579a61cc0e282a4692c37223ae02f4c0c2c31f63d86b163902272c87698"
+  },
+  "student": {
+    "path": "models/mlx/NexVeridian__Qwen3.6-27B-3bit",
+    "format": "mlx-affine",
+    "size_bytes": 11771374441,
+    "effective_bpw": 3.5012295063164975,
+    "n_params": 26895998464,
+    "quantization": {
+      "kind": "affine",
+      "bits": 3,
+      "group_size": 64,
+      "mode": "affine"
+    },
+    "scored_n_params": 26895998464,
+    "scored_bytes": 11771132928,
+    "scored_bpw": 3.5012295063164975,
+    "provenance": null
+  },
+  "tokenizer": {
+    "mode": "mlx-student",
+    "identical": true,
+    "encoding_parity": true,
+    "diffs": [],
+    "forced": false,
+    "stream_is_students": false
+  },
+  "calibration": {
+    "corpus": "Salesforce/wikitext:wikitext-103-raw-v1",
+    "num_samples": 512,
+    "max_seq_len": 512,
+    "seed": 123,
+    "top_k": 32768,
+    "score_window": [
+      256,
+      512
+    ],
+    "long_context": false,
+    "corpus_tokens_hash": "3862684d4e318b3b"
+  },
+  "kld": {
+    "se": 0.0040255381387655845,
+    "floor_mean": 0.0018069471698254347,
+    "mean": 0.21536707878112793,
+    "se_method": "clustered-by-sequence",
+    "p50": 0.1120104268193245,
+    "p95": 0.6938757300376892,
+    "p99": 2.0194015502929688,
+    "p999": 6.57659912109375,
+    "max": 24.74407196044922
+  },
+  "delta_p": {
+    "mean": -0.02643553353846073,
+    "se": 0.0008797746960490297,
+    "rms": 0.13315860551592393
+  },
+  "agreement": {
+    "top1": 0.7966461181640625,
+    "top5": 0.9777374267578125
+  },
+  "tokens_scored": 131072,
+  "elapsed_seconds": 1825.531,
+  "scorer_version": "mlx-kld 0.1.0",
+  "timestamp": "2026-07-26T04:47:29.660469+00:00",
+  "tokens_dropped_nonfinite": 0,
+  "by_position": [
+    {
+      "range": "256-320",
+      "tokens": 32768,
+      "mean_kld": 0.21498540043830872,
+      "p95_kld": 0.6954721212387085,
+      "top1_agreement": 0.7955322265625
+    },
+    {
+      "range": "320-384",
+      "tokens": 32768,
+      "mean_kld": 0.21532461047172546,
+      "p95_kld": 0.701831042766571,
+      "top1_agreement": 0.793182373046875
+    },
+    {
+      "range": "384-448",
+      "tokens": 32768,
+      "mean_kld": 0.21223056316375732,
+      "p95_kld": 0.6910484433174133,
+      "top1_agreement": 0.79864501953125
+    },
+    {
+      "range": "448-end",
+      "tokens": 32768,
+      "mean_kld": 0.218927800655365,
+      "p95_kld": 0.6849705576896667,
+      "top1_agreement": 0.799224853515625
+    }
+  ],
+  "kld_histogram": {
+    "bin_edges": [
+      0.0,
+      1e-06,
+      1.778279410038923e-06,
+      3.162277660168379e-06,
+      5.623413251903491e-06,
+      1e-05,
+      1.778279410038923e-05,
+      3.1622776601683795e-05,
+      5.623413251903491e-05,
+      0.0001,
+      0.00017782794100389227,
+      0.00031622776601683794,
+      0.0005623413251903491,
+      0.001,
+      0.0017782794100389228,
+      0.0031622776601683794,
+      0.005623413251903491,
+      0.01,
+      0.01778279410038923,
+      0.03162277660168379,
+      0.05623413251903491,
+      0.1,
+      0.1778279410038923,
+      0.31622776601683794,
+      0.5623413251903491,
+      1.0,
+      1.7782794100389228,
+      3.1622776601683795,
+      5.623413251903491,
+      10.0,
+      Infinity
+    ],
+    "counts": [
+      1,
+      2,
+      1,
+      5,
+      36,
+      65,
+      156,
+      286,
+      508,
+      882,
+      1242,
+      1758,
+      2407,
+      2709,
+      3271,
+      3669,
+      4423,
+      5240,
+      6792,
+      10229,
+      17307,
+      26328,
+      23555,
+      11391,
+      4894,
+      2297,
+      1046,
+      383,
+      128,
+      61
+    ]
+  },
+  "cache": {
+    "dir": "~/.mlx-kld-cache/ae5835d7d6631efb",
+    "status": "HIT",
+    "top_k": 32768
+  },
+  "plausibility": {
+    "implausible": false,
+    "reason": null
+  }
+}

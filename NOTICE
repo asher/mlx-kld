@@ -1,0 +1,20 @@
+mlx-kld
+Copyright 2026 Asher Feldman
+
+Licensed under the Apache License, Version 2.0. See the LICENSE file for the
+full text.
+
+--------------------------------------------------------------------------
+
+This product contains a derived work of mlx-lm, which is licensed under the
+MIT License (Copyright (c) 2023 Apple Inc.).
+
+  src/mlx_kld/models.py :: _qwen35_conv1d_gated_sanitize
+
+is adapted from mlx_lm.models.qwen3_5.TextModel.sanitize. It narrows the
+zero-centered-norm shift gate to unsanitized conv1d state, matching mlx-lm
+PR #990 / commit b3b9639, and is applied only while the installed mlx-lm still
+carries the older gate. It is intended for removal once the minimum supported
+mlx-lm includes that change.
+
+  https://github.com/ml-explore/mlx-lm

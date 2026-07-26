@@ -1,0 +1,99 @@
+[build-system]
+# >=1.27 for PEP 639 (`license` as an SPDX expression plus `license-files`).
+requires = ["hatchling>=1.27"]
+build-backend = "hatchling.build"
+
+[project]
+name = "mlx-kld"
+dynamic = ["version"]
+description = "KL-divergence scoring of quantized students (MLX safetensors or GGUF) against a full-precision teacher, with a self-managing disk cache of teacher logits"
+readme = "README.md"
+license = "Apache-2.0"
+license-files = ["LICENSE", "NOTICE"]
+requires-python = ">=3.10"
+authors = [{ name = "Asher Feldman" }]
+keywords = ["mlx", "quantization", "kl-divergence", "evaluation", "apple-silicon", "llm"]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Developers",
+    "Intended Audience :: Science/Research",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3 :: Only",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Operating System :: MacOS",
+    "Topic :: Scientific/Engineering :: Artificial Intelligence",
+]
+# Explicit lower bounds on everything, set low but real: an old cached wheel
+# that resolves fine and then fails at runtime with an unrelated-looking error
+# is worse than a resolver conflict at install time.
+dependencies = [
+    "mlx>=0.29",
+    "mlx-lm>=0.31",
+    "datasets>=2.16",
+    "numpy>=1.24",
+    "tqdm>=4.62",
+    "safetensors>=0.4",
+    "huggingface-hub>=0.20",
+]
+
+[project.optional-dependencies]
+# Score K-quant safetensors checkpoints (load + bits-per-weight) produced by
+# mlx-kquant. Plain affine / bf16 checkpoints need none of this.
+kquant = ["mlx-kquant"]
+# Score GGUF students (K-quant / IQ / MXFP4 codecs) via the gmlx
+# zero-conversion loader. Needs Python 3.11+; pulls gmlx's full runtime
+# dependency set (see README before installing into a shared venv).
+gguf = ["gmlx>=0.1.0"]
+dev = ["pytest>=8", "ruff>=0.6"]
+
+[project.urls]
+Homepage = "https://github.com/asher/mlx-kld"
+Repository = "https://github.com/asher/mlx-kld"
+Issues = "https://github.com/asher/mlx-kld/issues"
+Changelog = "https://github.com/asher/mlx-kld/blob/main/CHANGELOG.md"
+
+[project.scripts]
+mlx-kld = "mlx_kld.cli:main"
+
+[tool.hatch.version]
+path = "src/mlx_kld/__init__.py"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/mlx_kld"]
+
+# Declared explicitly rather than inherited from .gitignore, so a stray
+# directory in someone's working tree cannot end up in a published sdist.
+[tool.hatch.build.targets.sdist]
+include = [
+    "/src/mlx_kld",
+    "/tests",
+    "/examples",
+    "/.github",
+    "/conftest.py",
+    "/README.md",
+    "/CHANGELOG.md",
+    "/CONTRIBUTING.md",
+    "/LICENSE",
+    "/NOTICE",
+    "/pyproject.toml",
+]
+
+[tool.pytest.ini_options]
+# Tests import mlx_kld directly, so a bare `pytest` works from a fresh clone
+# without an editable install.
+pythonpath = ["src"]
+testpaths = ["tests"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py310"
+
+[tool.ruff.lint]
+# Beyond ruff's default (a subset of E plus F): import order (I), py310+
+# idiom upgrades (UP), likely-bug patterns (B), and the rest of pycodestyle's
+# errors and warnings. Contributors get one `ruff check` verdict rather than a
+# style discussion per pull request.
+select = ["E", "W", "F", "I", "UP", "B"]

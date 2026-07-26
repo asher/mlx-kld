@@ -1,0 +1,30 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.egg-info/
+.venv*/
+venv/
+.python-version
+.pytest_cache/
+.ruff_cache/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+.DS_Store
+
+# Outputs and caches
+kld-results/
+.mlx-kld-cache/
+dist/
+build/
+
+# Atomic-write scratch (see _io.write_text_atomic): temp files live in the
+# destination directory, so a crash mid-write can leave one behind.
+.*.tmp
+
+# Local env / secrets
+.env
+.env.local
