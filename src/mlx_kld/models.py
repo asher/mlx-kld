@@ -11,8 +11,6 @@ from __future__ import annotations
 import json
 from pathlib import Path
 
-from ._log import info
-
 
 def is_gguf_path(path_or_id: str) -> bool:
     """True iff ``path_or_id`` is a local ``.gguf`` file (GGUF student)."""
@@ -45,85 +43,6 @@ def _is_kquant(cfg: dict) -> bool:
     # `quantization_config`; accept either spelling.
     q = cfg.get("quantization") or {}
     return q.get("mode") == "kquant"
-
-
-# mlx-lm's stock qwen3_5 sanitize gates the zero-centered-norm +1.0 shift on
-# `has_mtp_weights or has_unsanitized_conv1d`. The mtp term is a stale proxy:
-# already-converted MLX checkpoints keep their norms in standard (post-shift)
-# form yet still carry mtp. tensors, so the stock gate double-shifts them and
-# corrupts the logits (e.g. Jundot Qwen3.6 oQ4e-mtp -> top-1 ~0%). The fix,
-# mlx-lm PR #990 / commit b3b9639, narrows the gate to conv1d state only, which
-# still shifts genuinely-raw checkpoints (their conv1d is not yet transposed).
-#
-# This replaces a third-party method process-wide, so it is gated: the patch is
-# skipped once upstream's own sanitize stops gating on mtp (see
-# _sanitize_still_gates_on_mtp). Still stock as of mlx-lm 0.31.3.
-# TODO: drop this monkeypatch once the minimum supported mlx-lm includes #990.
-def _qwen35_conv1d_gated_sanitize(self, weights):
-    has_unsanitized_conv1d = any(
-        "conv1d.weight" in k and v.shape[-1] != 1 for k, v in weights.items()
-    )
-    should_shift = has_unsanitized_conv1d
-    weights = {k: v for k, v in weights.items() if "mtp." not in k}
-    if getattr(self.args, "tie_word_embeddings", False):
-        weights.pop("lm_head.weight", None)
-    norm_keys = (
-        ".input_layernorm.weight",
-        ".post_attention_layernorm.weight",
-        "model.norm.weight",
-        ".q_norm.weight",
-        ".k_norm.weight",
-    )
-    for k, v in weights.items():
-        if "conv1d.weight" in k and v.shape[-1] != 1:
-            weights[k] = v.moveaxis(2, 1)
-        if should_shift and any(k.endswith(sfx) for sfx in norm_keys):
-            if v.ndim == 1:
-                weights[k] = v + 1.0
-    return weights
-
-
-_QWEN35_NORMSHIFT_PATCHED = False
-
-
-def _sanitize_still_gates_on_mtp(sanitize_fn) -> bool:
-    """True when mlx-lm's ``sanitize`` still uses the stale mtp proxy.
-
-    Detected from the source rather than a version number, because the release
-    carrying PR #990 is not known at the time of writing and a wrong pin would
-    fail in the worse direction. Unreadable source (a C extension, a stripped
-    install) answers True: the vendored gate is a strict narrowing of the stock
-    one, so applying it when it was not needed is safe, while skipping it when
-    it *was* needed silently corrupts logits.
-    """
-    import inspect
-
-    try:
-        return "has_mtp_weights" in inspect.getsource(sanitize_fn)
-    except (OSError, TypeError):
-        return True
-
-
-def _apply_qwen35_normshift_fix() -> None:
-    """Patch mlx-lm's ``qwen3_5.TextModel.sanitize`` to the conv1d-only norm
-    shift gate (see ``_qwen35_conv1d_gated_sanitize``). Idempotent; a no-op if
-    mlx-lm lacks the module, or already carries the fix. The VL wrapper's
-    ``Model.sanitize`` delegates to the language model's, so patching
-    ``TextModel`` covers both paths."""
-    global _QWEN35_NORMSHIFT_PATCHED
-    if _QWEN35_NORMSHIFT_PATCHED:
-        return
-    try:
-        from mlx_lm.models import qwen3_5
-    except ImportError:
-        return
-    if not _sanitize_still_gates_on_mtp(qwen3_5.TextModel.sanitize):
-        info("mlx-lm already gates the qwen3_5 norm shift on conv1d state. "
-             "The vendored PR #990 patch is no longer needed and can be dropped")
-        _QWEN35_NORMSHIFT_PATCHED = True
-        return
-    qwen3_5.TextModel.sanitize = _qwen35_conv1d_gated_sanitize
-    _QWEN35_NORMSHIFT_PATCHED = True
 
 
 def _load_model(path_or_id: str, lazy: bool = True):
@@ -162,7 +81,6 @@ def _load_model(path_or_id: str, lazy: bool = True):
         return model, config
     from mlx_lm.utils import load
 
-    _apply_qwen35_normshift_fix()
     model, _tok, config = load(path_or_id, lazy=lazy, return_config=True)
     return model, config
 

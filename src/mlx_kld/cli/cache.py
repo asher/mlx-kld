@@ -4,7 +4,7 @@ from __future__ import annotations
 
 import argparse
 import sys
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 from pathlib import Path
 
 from .._constants import DEFAULT_CACHE_DIR
@@ -64,7 +64,7 @@ def _list(args: argparse.Namespace) -> int:
     if not entries:
         print(f"cache is empty: {args.cache_dir}")
         return 0
-    now = datetime.now(timezone.utc)
+    now = datetime.now(UTC)
     hdr = f"{'key':16} {'size':>10} {'last used':>14}  {'top_k':>7}  teacher"
     print(hdr)
     print("-" * (len(hdr) + 20))

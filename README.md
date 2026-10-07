@@ -57,7 +57,7 @@ pip install 'mlx-kld[kquant]'
 pip install 'mlx-kld[gguf]'
 ```
 
-Requires Apple Silicon and Python 3.10 or newer (3.11+ for the `[gguf]` extra).
+Requires Apple Silicon and Python 3.11 or newer.
 The teacher has to fit in unified memory alongside the student, so a 27B model
 at bfloat16 (about 55 GB of weights) needs a 64 GB machine or larger. You also
 need disk for the cache, which is sized in [The teacher cache](#the-teacher-cache).

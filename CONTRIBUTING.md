@@ -13,7 +13,7 @@ python -m venv .venv && source .venv/bin/activate
 pip install -e '.[dev]'
 ```
 
-Apple Silicon and Python 3.10+ are required (3.11+ for the `[gguf]` extra).
+Apple Silicon and Python 3.11+ are required.
 `pytest` works from a fresh clone without the editable install as well, since
 the repo's `conftest.py` puts `src/` on the path for both in-process imports
 and the subprocess tests.
@@ -27,7 +27,7 @@ mlx-kld self-test                  # the numerical + schema suite the CLI ships
 ```
 
 CI runs the same checks. `ruff check` runs on Linux, and the test suite plus
-`self-test` run on macOS against Python 3.10, 3.11, 3.12, and 3.13.
+`self-test` run on macOS against Python 3.11, 3.12, 3.13, and 3.14.
 The release workflow builds and publishes on a `vX.Y.Z` tag, which must match
 `__version__` in `src/mlx_kld/__init__.py`.
 

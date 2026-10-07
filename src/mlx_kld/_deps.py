@@ -18,7 +18,7 @@ _KQUANT_HINT = (
 
 _GGUF_HINT = (
     "scoring a GGUF student needs the optional gmlx dependency "
-    "(Python 3.11+). Install it with:\n\n    pip install 'mlx-kld[gguf]'"
+    "Install it with:\n\n    pip install 'mlx-kld[gguf]'"
 )
 
 
@@ -32,20 +32,7 @@ def require_kquant() -> None:
 
 def require_gguf() -> None:
     """Raise ``ImportError`` with an actionable hint if ``[gguf]`` is absent."""
-    import sys
-
     try:
         import gmlx  # noqa: F401
     except ImportError as e:
-        # Diagnose the failure rather than gate on the version: gmlx's metadata
-        # enforces 3.11+, so on 3.10 the install fails with a raw pip-resolver
-        # error and "pip install 'mlx-kld[gguf]'" is advice that cannot work.
-        # Checking the version only here keeps an importable gmlx usable on any
-        # interpreter that managed to import it.
-        if sys.version_info < (3, 11):
-            raise ImportError(
-                "mlx-kld: scoring a GGUF student needs Python 3.11+. This is "
-                f"{sys.version_info[0]}.{sys.version_info[1]}, where the "
-                "base install and safetensors scoring still work."
-            ) from e
         raise ImportError(f"mlx-kld: {_GGUF_HINT}") from e
