@@ -23,11 +23,10 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        # Every version pyproject advertises. 3.10 is the requires-python
-        # floor and 3.13 the newest qualified release. The [gguf] extra needs
-        # 3.11+ and is not installed here, so its tests skip themselves when
-        # gmlx is absent.
-        python-version: ["3.10", "3.11", "3.12", "3.13"]
+        # Every version pyproject advertises. 3.11 is the requires-python
+        # floor and 3.13 the newest qualified release. The [gguf] extra is not
+        # installed here, so its tests skip themselves when gmlx is absent.
+        python-version: ["3.11", "3.12", "3.13"]
     steps:
       - uses: actions/checkout@v6
       - uses: actions/setup-python@v6

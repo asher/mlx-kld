@@ -9,6 +9,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
+- Requires Python 3.11+ (was 3.10+). mlx-lm 0.32.0 dropped 3.10, so the
+  `mlx-lm>=0.32.0` floor below is unresolvable there. The `[gguf]` extra's
+  separate 3.11 guard is gone, since it is now the package-wide floor.
 - Requires `mlx-lm>=0.32.0,<0.33` (was `>=0.31`). The release that first
   carries mlx-lm PR #990 is 0.32.0, so the vendored qwen3_5 norm-shift patch
   (see 0.1.0) is removed; upstream's `sanitize` now gates the shift on

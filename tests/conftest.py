@@ -9,7 +9,7 @@ rather than declaring it. A fixture is the supported way to share it.
 from __future__ import annotations
 
 import json
-from datetime import datetime, timedelta, timezone
+from datetime import UTC, datetime, timedelta
 
 import pytest
 
@@ -29,7 +29,7 @@ def make_cache_entry():
         d.mkdir(parents=True)
         (d / "batch-00000.safetensors").write_bytes(b"\0" * size_bytes)
         last_used = (
-            datetime.now(timezone.utc) - timedelta(days=age_days)
+            datetime.now(UTC) - timedelta(days=age_days)
         ).isoformat()
         (d / "manifest.json").write_text(json.dumps({
             "format_version": 1,

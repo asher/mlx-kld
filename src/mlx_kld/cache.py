@@ -37,7 +37,7 @@ import os
 import shutil
 import sys
 from contextlib import contextmanager
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 from pathlib import Path
 
 from ._constants import CACHE_FORMAT_VERSION, DEFAULT_CACHE_DIR
@@ -50,7 +50,7 @@ from .tokenizer import load_calibration_tokens, tokenizer_hash
 
 
 def _now_iso() -> str:
-    return datetime.now(timezone.utc).isoformat()
+    return datetime.now(UTC).isoformat()
 
 
 def _teacher_identity(teacher_path: str) -> str:
@@ -227,12 +227,12 @@ def _entry_last_used(manifest: dict, entry_dir: Path) -> datetime:
             dt = datetime.fromisoformat(raw)
             # A hand-built manifest may carry a naive timestamp; normalize so
             # sorting and age math never mix naive and aware datetimes.
-            return dt if dt.tzinfo else dt.replace(tzinfo=timezone.utc)
+            return dt if dt.tzinfo else dt.replace(tzinfo=UTC)
         except ValueError:
             pass
     # Hand-built caches missing last_used: fall back to the manifest's mtime.
     ts = (entry_dir / "manifest.json").stat().st_mtime
-    return datetime.fromtimestamp(ts, tz=timezone.utc)
+    return datetime.fromtimestamp(ts, tz=UTC)
 
 
 def entry_info(entry_dir: Path) -> dict | None:
@@ -409,7 +409,7 @@ def gc(
     Returns evicted ``(key, size_bytes)``."""
     evicted: list[tuple[str, int]] = []
     if older_than_days is not None:
-        cutoff = datetime.now(timezone.utc).timestamp() - older_than_days * 86400
+        cutoff = datetime.now(UTC).timestamp() - older_than_days * 86400
         for e in list_entries(cache_root):
             if e["last_used"].timestamp() < cutoff and _try_remove_entry(cache_root, e):
                 evicted.append((e["key"], e["size_bytes"]))

@@ -12,7 +12,7 @@ from __future__ import annotations
 import glob
 import json
 import os
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 from pathlib import Path
 from typing import Any
 
@@ -154,7 +154,7 @@ def _publisher(student_path: str) -> str | None:
 
 
 def _now_iso() -> str:
-    return datetime.now(timezone.utc).isoformat(timespec="seconds")
+    return datetime.now(UTC).isoformat(timespec="seconds")
 
 
 def _window_str(window) -> str:

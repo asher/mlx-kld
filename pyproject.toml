@@ -10,7 +10,7 @@ description = "KL-divergence scoring of quantized students (MLX safetensors or G
 readme = "README.md"
 license = "Apache-2.0"
 license-files = ["LICENSE", "NOTICE"]
-requires-python = ">=3.10"
+requires-python = ">=3.11"
 authors = [{ name = "Asher Feldman" }]
 keywords = ["mlx", "quantization", "kl-divergence", "evaluation", "apple-silicon", "llm"]
 classifiers = [
@@ -19,7 +19,6 @@ classifiers = [
     "Intended Audience :: Science/Research",
     "Programming Language :: Python :: 3",
     "Programming Language :: Python :: 3 :: Only",
-    "Programming Language :: Python :: 3.10",
     "Programming Language :: Python :: 3.11",
     "Programming Language :: Python :: 3.12",
     "Programming Language :: Python :: 3.13",
@@ -47,8 +46,7 @@ dependencies = [
 # mlx-kquant. Plain affine / bf16 checkpoints need none of this.
 kquant = ["mlx-kquant"]
 # Score GGUF students (K-quant / IQ / MXFP4 codecs) via the gmlx
-# zero-conversion loader. Needs Python 3.11+; pulls gmlx's full runtime
-# dependency set (see README before installing into a shared venv).
+# zero-conversion loader. Pulls gmlx's full runtime dependency set (see README before installing into a shared venv).
 gguf = ["gmlx>=0.1.0"]
 dev = ["pytest>=8", "ruff>=0.6"]
 
@@ -92,10 +90,10 @@ testpaths = ["tests"]
 
 [tool.ruff]
 line-length = 100
-target-version = "py310"
+target-version = "py311"
 
 [tool.ruff.lint]
-# Beyond ruff's default (a subset of E plus F): import order (I), py310+
+# Beyond ruff's default (a subset of E plus F): import order (I), py311+
 # idiom upgrades (UP), likely-bug patterns (B), and the rest of pycodestyle's
 # errors and warnings. Contributors get one `ruff check` verdict rather than a
 # style discussion per pull request.

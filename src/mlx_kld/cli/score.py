@@ -8,7 +8,7 @@ import hashlib
 import json
 import sys
 import time
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 from pathlib import Path
 from typing import NoReturn
 
@@ -468,7 +468,7 @@ def cmd(args: argparse.Namespace) -> int:
         "elapsed_seconds": round(elapsed_seconds, 3),
         "elapsed_phase": elapsed_phase,
         "scorer_version": f"mlx-kld {__version__}",
-        "timestamp": datetime.now(timezone.utc).isoformat(),
+        "timestamp": datetime.now(UTC).isoformat(),
         "by_position": metrics.get("by_position"),
         "kld_histogram": metrics.get("kld_histogram"),
         "cache": {
