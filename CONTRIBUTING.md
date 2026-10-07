@@ -27,7 +27,7 @@ mlx-kld self-test                  # the numerical + schema suite the CLI ships
 ```
 
 CI runs the same checks. `ruff check` runs on Linux, and the test suite plus
-`self-test` run on macOS against Python 3.11, 3.12, and 3.13.
+`self-test` run on macOS against Python 3.11, 3.12, 3.13, and 3.14.
 The release workflow builds and publishes on a `vX.Y.Z` tag, which must match
 `__version__` in `src/mlx_kld/__init__.py`.
 
