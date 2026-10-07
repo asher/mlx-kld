@@ -31,7 +31,10 @@ classifiers = [
 # is worse than a resolver conflict at install time.
 dependencies = [
     "mlx>=0.29",
-    "mlx-lm>=0.31",
+    # Capped at the next minor: mlx-lm is pre-1.0 and this tool reads its internals
+    # (load, load_tokenizer, models.cache). >=0.32.0 is where the qwen3_5 norm-shift
+    # fix (PR #990) landed. The weekly canary job tests the uncapped latest.
+    "mlx-lm>=0.32.0,<0.33",
     "datasets>=2.16",
     "numpy>=1.24",
     "tqdm>=4.62",

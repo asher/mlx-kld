@@ -5,7 +5,8 @@ on:
     branches: [main]
   pull_request:
   schedule:
-    # Weekly run against the newest in-range mlx / mlx-lm releases. This tool
+    # Weekly run against the newest in-range mlx / mlx-lm releases, plus the
+    # `canary` job against the newest releases regardless of range. This tool
     # reads mlx-lm internals (model loading, tokenizer wrapping), so an upstream
     # release can break it without a push to this repo.
     - cron: "0 6 * * 1"
@@ -76,6 +77,31 @@ jobs:
               sys.exit("wheel is missing py.typed; the package advertises inline types")
           print(f"wheel ships all {len(want)} tracked modules + py.typed, nothing else")
           EOF
+
+  canary:
+    # Early warning for the capped dependency ranges in pyproject: installs the
+    # newest mlx / mlx-lm even when they are outside the declared range. Never
+    # blocks (continue-on-error): red here means "check before raising the cap",
+    # not "users are broken", since users cannot resolve to out-of-range versions.
+    # Weekly and manual only, so a push or PR is not gated on upstream's state.
+    if: github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'
+    runs-on: macos-26
+    continue-on-error: true
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.13"
+      - name: Install with the newest mlx / mlx-lm
+        run: |
+          python -m pip install --upgrade pip
+          pip install -e ".[dev]"
+          pip install --upgrade mlx mlx-lm
+          pip list | grep -i "^mlx"
+      - name: Unit suite
+        run: pytest -q
+      - name: CLI self-test
+        run: mlx-kld self-test
 
   lint:
     # Lint needs no MLX, so it runs on the cheapest runner available.
