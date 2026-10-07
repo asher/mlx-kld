@@ -15,7 +15,7 @@ The public Python API (used by external quantizer tooling) is
 
 from __future__ import annotations
 
-__version__ = "0.1.0"
+__version__ = "0.1.1"
 
 from .cache import ensure_teacher_topk_cache, entry_lock
 from .errors import (

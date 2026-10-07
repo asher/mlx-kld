@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.1.1]
+
 ### Changed
 
 - Requires Python 3.11+ (was 3.10+). mlx-lm 0.32.0 dropped 3.10, so the
